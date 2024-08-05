@@ -1,4 +1,4 @@
 url:
 =========
 register new user=http://localhost:8080/to_do_app/register
-user login=http://localhost:8080/to_do_app/register
+user login=http://localhost:8080/to_do_app/login

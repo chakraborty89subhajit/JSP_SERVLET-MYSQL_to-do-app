@@ -13,17 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TodoDAOImpl  implements ToDoDAO{
-    public static final String INSERT_TODOS_SQL="insert into todos"+
+    public static final String INSERT_TODOS_SQL="insert into todo"+
                                                  "(title,username,description,target_date,is_done) values"+
                                                   "(?,?,?,?,?);";
 
-    public static final String SELECT_TODO_BY_ID="select id,title,username,description,target_date,is_done from todos where id=?";
+    public static final String SELECT_TODO_BY_ID="select id,title,username,description,target_date,is_done from todo where id=?";
 
-    public static final String SELECT_ALL_TODOS="select * from todos";
+    public static final String SELECT_ALL_TODOS="select * from todo";
 
-    public static final String DELETE_TODO_BY_ID="delete from todos where id=?";
+    public static final String DELETE_TODO_BY_ID="delete from todo where id=?";
 
-    public static final String UPDATE_TODO="update todos set title=?,username=?,description=?,target_date=?,is_done=?  where id= ?";
+    public static final String UPDATE_TODO="update todo set title=?,username=?,description=?,target_date=?,is_done=?  where id= ?";
 
 
     public TodoDAOImpl(){
@@ -78,28 +78,23 @@ public class TodoDAOImpl  implements ToDoDAO{
     }
 
     public List<ToDo> selectAllTodos(){
-        List<ToDo> todos= new ArrayList<>();
-
-        try(Connection connection= JDBCUtil.getConnection();
-             PreparedStatement pstmt= connection.prepareStatement(SELECT_ALL_TODOS);){
-            System.out.println(pstmt);
-            ResultSet rs= pstmt.executeQuery();
-
-            while(rs.next()){
-               long id= rs.getLong("id");
-               String title= rs.getString("title");
-               String username= rs.getString("username");
-               String description=rs.getString("description");
-               LocalDate targetDate= rs.getDate("target_date").toLocalDate();
-               boolean isDone= rs.getBoolean("is_done");
-
-               todos.add(new ToDo(id,title,username,description,targetDate,isDone));
+        List<ToDo> todos = new ArrayList<>();
+        try (Connection connection = JDBCUtil.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(SELECT_ALL_TODOS);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                long id = rs.getLong("id");
+                String title = rs.getString("title");
+                String username = rs.getString("username");
+                String description = rs.getString("description");
+                LocalDate targetDate = rs.getDate("target_date").toLocalDate();
+                boolean isDone = rs.getBoolean("is_done");
+                todos.add(new ToDo(id, title, username, description, targetDate, isDone));
             }
-
-        }catch(SQLException e){
+        } catch (SQLException e) {
             JDBCUtil.printSQLException(e);
         }
-return todos;
+        return todos;
     }
 
     public boolean deleteTodo(int id) throws SQLException{

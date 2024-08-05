@@ -1,6 +1,7 @@
 create database mydb
 use mydb
 
+=========================================
 
 CREATE TABLE userRegistarion (
     id int NOT NULL AUTO_INCREMENT,
@@ -12,3 +13,15 @@ CREATE TABLE userRegistarion (
 );
 
 select * from userRegistarion
+
+=========================================
+CREATE TABLE todo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    description TEXT,
+    target_date DATE,
+    is_done BOOLEAN
+);
+
+select * from todo
