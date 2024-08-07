@@ -116,7 +116,7 @@ String title=request.getParameter("title");
 String username= request.getParameter("username");
 String description= request.getParameter("description");
 LocalDate targetDate=LocalDate.parse(request.getParameter("targetDate"));
-boolean isDone= Boolean.valueOf(request.getParameter("isDone"));
+boolean isDone= request.getParameter("status")!=null;
 
 ToDo updateToDo = new ToDo(id,title,username,description,targetDate,isDone);
 
@@ -129,7 +129,7 @@ private void deleteToDo(HttpServletRequest  request, HttpServletResponse respons
         throws SQLException,IOException{
 int id= Integer.parseInt(request.getParameter("id"));
 todoDAO.deleteTodo(id);
-response.sendRedirect("todolist");
+response.sendRedirect("list");
 }
 
 }

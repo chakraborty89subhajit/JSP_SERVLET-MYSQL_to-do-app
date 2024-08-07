@@ -26,8 +26,9 @@
         </thead>
         <tbody>
             <%
-                if (listToDo != null) {
-                    for (ToDo todo : listToDo) {
+            List<ToDo> listTodo = (List<ToDo>) request.getAttribute("listTodo");
+                if (listTodo != null) {
+                    for (ToDo todo : listTodo) {
             %>
             <tr>
                 <td><%= todo.getId() %></td>
